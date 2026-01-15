@@ -12,20 +12,31 @@ public class ProdutoService {
     public void adicionarProduto(Produto produto) {
 
         if (produto.getNome() == null || produto.getNome().isBlank()) {
-            throw new IllegalArgumentException("Nome inválido!");
+            throw new IllegalArgumentException("NOME INVÁLIDO!");
         }
         if (produto.getEstoque() < 0) {
-            throw new IllegalArgumentException("Estoque não pode ser negativo!");
+            throw new IllegalArgumentException("ESTOQUE NÃO PODE SER NEGATIVO!");
         }
         if (produto.getPreco() <= 0) {
-            throw new IllegalArgumentException("Preço inválido!");
+            throw new IllegalArgumentException("PREÇO INVÁLIDO!");
         }
 
         boolean marcaExiste = marcaDAO.existePorId(produto.getMarcaId());
 
         if (!marcaExiste) {
-            throw new RuntimeException("Marca não encontrada!");
+            throw new RuntimeException("MARCA NÃO ENCONTRADA!");
         }
+
         produtoDAO.adicionarProduto(produto);
+    }
+
+    public String existeNomeProduto(Produto produto) {
+
+        boolean produtoExiste = marcaDAO.existePorNome(produto.getNome());
+
+        if (!produtoExiste) {
+            throw new IllegalArgumentException("PRODUTO NÃO ENCONTRADO!");
+        }
+        return produto.getNome();
     }
 }

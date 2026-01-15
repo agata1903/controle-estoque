@@ -29,8 +29,8 @@ public class MarcaDAO {
     public boolean existePorId(int id) {
 
         String sql = "SELECT 1 FROM marca WHERE id = ?";
-        try (Connection conn = ConexaoMySQL.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql))
+        try (Connection connection = ConexaoMySQL.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql))
         {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -39,6 +39,23 @@ public class MarcaDAO {
         }
         catch (SQLException e) {
             throw new RuntimeException("Erro ao verificar marca", e);
+        }
+    }
+
+    public boolean existePorNome(String nome) {
+        String sql = "SELECT 1 FROM marca WHERE nome = ?";
+
+        try(Connection connection = ConexaoMySQL.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, nome);
+            ResultSet rs = stmt.executeQuery();
+
+            return rs.next();
+
+        }
+        catch (SQLException e) {
+            throw new RuntimeException("MARCA NÃO ENCONTRADA", e);
         }
     }
 }
