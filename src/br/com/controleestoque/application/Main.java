@@ -17,14 +17,15 @@ public class Main {
         ProdutoService produtoService = new ProdutoService();
 
         int opcao, opcaoCadastro, opcaoBusca;
+        boolean confirmaCadastro = false;
 
         do {
             System.out.println("CONTROLE DE ESTOQUE");
-            System.out.println("ESCOLHA UMA OPÇÃO: 1- CADASTRAR, 2- BUSCAR:");
+            System.out.println("ESCOLHA UMA OPÇÃO: 1- CADASTRAR, 2- BUSCAR, 0- SAIR:");
             opcao = scanner.nextInt();
             switch (opcao) {
                 case 1 -> {
-                    System.out.println("ESCOLHA UMA OPÇÃO DE CADASTRO: 1- MARCA, 2- PRODUTO:");
+                    System.out.println("ESCOLHA UMA OPÇÃO DE CADASTRO: 1- MARCA, 2- PRODUTO, 0- VOLTAR:");
                     opcaoCadastro = scanner.nextInt();
                     scanner.nextLine();
 
@@ -48,25 +49,34 @@ public class Main {
                                 String nome = scanner.nextLine();
                                 System.out.println("ESTOQUE: ");
                                 int estoque = scanner.nextInt();
+                                scanner.nextLine();
                                 System.out.println("PREÇO: ");
                                 double preco = scanner.nextDouble();
+                                scanner.nextLine();
                                 System.out.println("DE QUAL MARCA ESTE PRODUTO SERÁ?");
                                 int marcaId = scanner.nextInt();
+                                scanner.nextLine();
                                 Produto p1 = new Produto(nome, estoque, preco, marcaId);
                                 produtoService.adicionarProduto(p1);
-                                System.out.println("PRODUTO CADASTRADO COM SUCESSO!");
+                                confirmaCadastro = true;
+                                if (confirmaCadastro) {
+                                    System.out.println("PRODUTO CADASTRADO COM SUCESSO!");
+                                }
+
                             } catch (Exception e) {
                                 System.out.println("ERRO: " + e.getMessage());
                             }
 
                         }
+
+                        case 0 -> {}
                         default -> System.out.println("OPÇÃO INVÁLIDA!");
                     }
 
                 }
 
                 case 2 -> {
-                    System.out.println("ESCOLHA UMA OPÇÃO DE BUSCA: 1- MARCA, 2- PRODUTO:");
+                    System.out.println("ESCOLHA UMA OPÇÃO DE BUSCA: 1- MARCA, 2- PRODUTO, 0- SAIR:");
                     opcaoBusca = scanner.nextInt();
                     scanner.nextLine();
 
@@ -81,6 +91,10 @@ public class Main {
                             catch (Exception e) {
                                 System.out.println(e.getMessage());
                             }
+                        }
+
+                        case 0 -> {
+                            continue;
                         }
                     }
                 }

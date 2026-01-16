@@ -27,6 +27,10 @@ public class ProdutoService {
             throw new RuntimeException("MARCA NÃO ENCONTRADA!");
         }
 
+        if (!marcaDAO.existePorId(produto.getMarcaId())) {
+            throw new IllegalArgumentException("MARCA NÃO ENCONTRADA PARA O ID INFORMADO!");
+        }
+
         produtoDAO.adicionarProduto(produto);
     }
 
@@ -39,4 +43,5 @@ public class ProdutoService {
         }
         return produto.getNome();
     }
+
 }

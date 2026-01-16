@@ -13,7 +13,7 @@ public class ProdutoDAO {
     //Adicionar produto
     public void adicionarProduto(Produto produto) {
 
-        String sql = "INSERT INTO produto (nome, estoque, preco, marcaId) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO produto (nome, estoque, preco, marca_id) VALUES (?,?,?,?)";
 
         try (Connection connection = ConexaoMySQL.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
@@ -25,7 +25,7 @@ public class ProdutoDAO {
              stmt.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("Erro");
+            System.out.println("ERRO" + e.getMessage());
         }
     }
 
@@ -42,7 +42,7 @@ public class ProdutoDAO {
             return rs.next();
         }
         catch (SQLException e) {
-            throw new IllegalArgumentException("Problema ao buscar o produto");
+            throw new IllegalArgumentException("PROBLEMA AO BUSCAR O PRODUTO");
         }
     }
 }
