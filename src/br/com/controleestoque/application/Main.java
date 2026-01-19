@@ -93,6 +93,18 @@ public class Main {
                             }
                         }
 
+                        case 2 -> {
+                            try {
+                                System.out.println("NOME: ");
+                                String nome = scanner.nextLine();
+                                Produto p = produtoService.mostrarProduto(nome);
+                                System.out.println("PRODUTO ENCONTRADO!");
+                                System.out.println("NOME: " + p.getNome() +
+                                        "\nESTOQUE: " + p.getEstoque());
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
                         case 0 -> {
                             continue;
                         }

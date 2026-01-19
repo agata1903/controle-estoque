@@ -45,4 +45,31 @@ public class ProdutoDAO {
             throw new IllegalArgumentException("PROBLEMA AO BUSCAR O PRODUTO");
         }
     }
+
+    //Mostrar produtos da busca
+    public Produto buscarPorNome(String nome) {
+        String sql = "SELECT * FROM produto WHERE nome = ?";
+        try (Connection connection = ConexaoMySQL.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, nome);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String nomeProduto = rs.getString("nome");
+                int estoque = rs.getInt("estoque");
+                double preco = rs.getDouble("preco");
+                int marcaId = rs.getInt("marca_id");
+
+                return new Produto(id, nomeProduto, estoque, preco, marcaId);
+
+            } else
+                return null;
+        }
+
+        catch (SQLException e) {
+            throw new IllegalArgumentException("PROBLEMA AO MOSTRAR O PRODUTO", e);
+        }
+    }
 }

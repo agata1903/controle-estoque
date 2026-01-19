@@ -34,14 +34,19 @@ public class ProdutoService {
         produtoDAO.adicionarProduto(produto);
     }
 
-    public String existeNomeProduto(Produto produto) {
+    public Produto mostrarProduto(String nome) {
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("NOME INVÁLIDO!");
+        }
 
-        boolean produtoExiste = marcaDAO.existePorNome(produto.getNome());
+        Produto produto = produtoDAO.buscarPorNome(nome);
 
-        if (!produtoExiste) {
+        if (produto == null) {
             throw new IllegalArgumentException("PRODUTO NÃO ENCONTRADO!");
         }
-        return produto.getNome();
+        return produto;
     }
+
+
 
 }
