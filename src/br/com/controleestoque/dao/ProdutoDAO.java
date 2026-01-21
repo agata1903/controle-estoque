@@ -72,4 +72,26 @@ public class ProdutoDAO {
             throw new IllegalArgumentException("PROBLEMA AO MOSTRAR O PRODUTO", e);
         }
     }
+
+    //Alterar produto por nome
+    public void alterarProduto(Produto produto) {
+        String sql = "UPDATE produto SET nome = ?, estoque = ?, preco = ?, marcaId = ? WHERE id = ?";
+
+        try (Connection connection = ConexaoMySQL.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, produto.getNome());
+            stmt.setInt(2, produto.getEstoque());
+            stmt.setDouble(3, produto.getPreco());
+            stmt.setInt(4, produto.getMarcaId());
+
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                System.out.println("NOME ALTERADO COM SUCESSO");
+            }
+        }
+        catch (SQLException e) {
+            throw new IllegalArgumentException("PROBLEMA AO ALTERAR O PRODUTO", e);
+        }
+    }
 }

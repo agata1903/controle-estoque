@@ -47,6 +47,24 @@ public class ProdutoService {
         return produto;
     }
 
+    public void alterarNome(Produto produto) {
+        if (produto.getNome() == null || produto.getNome().isBlank()) {
+            throw new IllegalArgumentException("NOME INVÁLIDO!");
+        }
 
+        produtoDAO.alterarProduto(produto);
+    }
 
+    public void alterarEstoque(Produto produto) {
+        if (produto.getEstoque() >= 50) {
+            throw new IllegalArgumentException("QUANTIDADE MÁXIMA DE ESTOQUE!");
+        }
+
+        produtoDAO.alterarProduto(produto);
+    }
+
+    public void alterarPreco(Produto produto) {
+
+        produtoDAO.alterarProduto(produto);
+    }
 }

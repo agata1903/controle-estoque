@@ -38,7 +38,7 @@ public class MarcaDAO {
             return rs.next();
         }
         catch (SQLException e) {
-            throw new RuntimeException("Erro ao verificar marca", e);
+            throw new RuntimeException("ERRO AO VERIFICAR MARCA", e);
         }
     }
 
@@ -58,4 +58,6 @@ public class MarcaDAO {
             throw new RuntimeException("MARCA NÃO ENCONTRADA", e);
         }
     }
+
+
 }
