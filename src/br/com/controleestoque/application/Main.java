@@ -22,11 +22,11 @@ public class Main {
 
         do {
             System.out.println("CONTROLE DE ESTOQUE");
-            System.out.println("ESCOLHA UMA OPÇÃO: 1- CADASTRAR, 2- BUSCAR, 3- ALTERAR, 4- REMOVER, 0- SAIR:");
+            System.out.println("ESCOLHA UMA OPÇÃO: \n1- CADASTRAR\n2- BUSCAR\n3- ALTERAR\n4- REMOVER\n0- SAIR:");
             opcao = scanner.nextInt();
             switch (opcao) {
                 case 1 -> {
-                    System.out.println("ESCOLHA UMA OPÇÃO DE CADASTRO: 1- MARCA, 2- PRODUTO, 0- VOLTAR:");
+                    System.out.println("ESCOLHA UMA OPÇÃO DE CADASTRO:\n1- MARCA\n2- PRODUTO\n0- VOLTAR:");
                     opcaoCadastro = scanner.nextInt();
                     scanner.nextLine();
 
@@ -51,13 +51,19 @@ public class Main {
                                 scanner.nextLine();
                                 marcaService.existePorId(marcaId);
                                 System.out.println("MARCA ENCONTRADA.");
-                                do {
-                                    System.out.println("NOME: ");
-                                    String nome = scanner.nextLine();
-                                    produtoService.existeProduto(nome);
-                                    nomeExiste = true;
+                                String nome;
+                                while (true) {
+                                    try {
+                                        System.out.println("NOME: ");
+                                        nome = scanner.nextLine();
+                                        produtoService.existeProduto(nome);
+                                        break;
+                                    }
+                                    catch (Exception e) {
+                                        System.out.println("ERRO: " + e.getMessage());
+                                    }
                                 }
-                                while (nomeExiste);
+
                                 System.out.println("ESTOQUE: ");
                                 int estoque = scanner.nextInt();
                                 scanner.nextLine();
@@ -79,7 +85,6 @@ public class Main {
                         case 0 -> {}
                         default -> System.out.println("OPÇÃO INVÁLIDA!");
                     }
-
                 }
 
                 case 2 -> {

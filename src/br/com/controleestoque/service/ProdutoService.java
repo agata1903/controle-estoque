@@ -52,6 +52,14 @@ public class ProdutoService {
         return produto;
     }
 
+    public void existeProduto(String nome) {
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("NOME INVÁLIDO!");
+        }
+        if (produtoDAO.buscarPorNome(nome) != null) {
+            throw new IllegalArgumentException("PRODUTO JÁ EXISTENTE!");
+        }
+    }
     public void alterarNome(Produto produto) {
         if (produto.getNome() == null || produto.getNome().isBlank()) {
             throw new IllegalArgumentException("NOME INVÁLIDO!");
