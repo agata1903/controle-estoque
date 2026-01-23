@@ -18,7 +18,7 @@ public class Main {
 
         String marcaEscolhida;
         int opcao, opcaoCadastro, opcaoBusca, opcaoAlteracao, opcaoAlteracaoMarca, opcaoAlteracaoProduto, opcaoRemocao;
-        boolean confirmaCadastro = false;
+        boolean confirmaCadastro = false, nomeExiste = false;
 
         do {
             System.out.println("CONTROLE DE ESTOQUE");
@@ -46,16 +46,23 @@ public class Main {
                         }
                         case 2 -> {
                             try {
-                                System.out.println("NOME: ");
-                                String nome = scanner.nextLine();
+                                System.out.println("DE QUAL MARCA ESTE PRODUTO SERÁ?");
+                                int marcaId = scanner.nextInt();
+                                scanner.nextLine();
+                                marcaService.existePorId(marcaId);
+                                System.out.println("MARCA ENCONTRADA.");
+                                do {
+                                    System.out.println("NOME: ");
+                                    String nome = scanner.nextLine();
+                                    produtoService.existeProduto(nome);
+                                    nomeExiste = true;
+                                }
+                                while (nomeExiste);
                                 System.out.println("ESTOQUE: ");
                                 int estoque = scanner.nextInt();
                                 scanner.nextLine();
                                 System.out.println("PREÇO: ");
                                 double preco = scanner.nextDouble();
-                                scanner.nextLine();
-                                System.out.println("DE QUAL MARCA ESTE PRODUTO SERÁ?");
-                                int marcaId = scanner.nextInt();
                                 scanner.nextLine();
                                 Produto p1 = new Produto(nome, estoque, preco, marcaId);
                                 produtoService.adicionarProduto(p1);
@@ -67,7 +74,6 @@ public class Main {
                             } catch (Exception e) {
                                 System.out.println("ERRO: " + e.getMessage());
                             }
-
                         }
 
                         case 0 -> {}
@@ -77,7 +83,7 @@ public class Main {
                 }
 
                 case 2 -> {
-                    System.out.println("ESCOLHA UMA OPÇÃO DE BUSCA: 1- MARCA, 2- PRODUTO, 0- SAIR:");
+                    System.out.println("ESCOLHA UMA OPÇÃO DE BUSCA: 1- MARCA, 2- PRODUTO, 0- VOLTAR:");
                     opcaoBusca = scanner.nextInt();
                     scanner.nextLine();
 
@@ -107,9 +113,8 @@ public class Main {
                             }
                         }
 
-                        case 0 -> {
-                            continue;
-                        }
+                        case 0 -> {}
+                        default -> System.out.println("OPÇÃO INVÁLIDA!");
                     }
                 }
 
@@ -165,9 +170,8 @@ public class Main {
                                     System.out.println("QUE TIPO DE ALTERAÇÃO GOSTARIA DE FAZER? 1- NOME, 2- ESTOQUE, 3- PREÇO, 0- VOLTAR:");
                                 }
 
-                                case 0 -> {
-                                    continue;
-                                }
+                                case 0 -> {}
+                                default -> System.out.println("OPÇÃO INVÁLIDA!");
                             }
                         }
                     }

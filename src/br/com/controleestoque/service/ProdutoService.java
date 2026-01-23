@@ -14,21 +14,25 @@ public class ProdutoService {
         if (produto.getNome() == null || produto.getNome().isBlank()) {
             throw new IllegalArgumentException("NOME INVÁLIDO!");
         }
+
+        if (produtoDAO.buscarPorNome(produto.getNome()) != null) {
+            throw new IllegalArgumentException("PRODUTO JÁ EXISTENTE!");
+        }
+
         if (produto.getEstoque() < 0) {
             throw new IllegalArgumentException("ESTOQUE NÃO PODE SER NEGATIVO!");
         }
+
+        if (produto.getEstoque() > 50) {
+            throw new IllegalArgumentException("QUANTIDADE MAIOR QUE O ESTOQUE MÁXIMO!");
+        }
+
         if (produto.getPreco() <= 0) {
             throw new IllegalArgumentException("PREÇO INVÁLIDO!");
         }
 
-        boolean marcaExiste = marcaDAO.existePorId(produto.getMarcaId());
-
-        if (!marcaExiste) {
-            throw new RuntimeException("MARCA NÃO ENCONTRADA!");
-        }
-
         if (!marcaDAO.existePorId(produto.getMarcaId())) {
-            throw new IllegalArgumentException("MARCA NÃO ENCONTRADA PARA O ID INFORMADO!");
+            throw new IllegalArgumentException("MARCA NÃO ENCONTRADA!");
         }
 
         produtoDAO.adicionarProduto(produto);
@@ -44,6 +48,7 @@ public class ProdutoService {
         if (produto == null) {
             throw new IllegalArgumentException("PRODUTO NÃO ENCONTRADO!");
         }
+
         return produto;
     }
 
@@ -56,7 +61,7 @@ public class ProdutoService {
     }
 
     public void alterarEstoque(Produto produto) {
-        if (produto.getEstoque() >= 50) {
+        if (produto.getEstoque() > 50) {
             throw new IllegalArgumentException("QUANTIDADE MÁXIMA DE ESTOQUE!");
         }
 
@@ -64,6 +69,9 @@ public class ProdutoService {
     }
 
     public void alterarPreco(Produto produto) {
+        if (produto.getPreco() <= 0) {
+            throw new IllegalArgumentException("PREÇO INVÁLIDO!");
+        }
 
         produtoDAO.alterarProduto(produto);
     }

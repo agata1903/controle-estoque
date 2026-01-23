@@ -75,7 +75,7 @@ public class ProdutoDAO {
 
     //Alterar produto por nome
     public void alterarProduto(Produto produto) {
-        String sql = "UPDATE produto SET nome = ?, estoque = ?, preco = ?, marcaId = ? WHERE id = ?";
+        String sql = "UPDATE produto SET nome = ?, estoque = ?, preco = ?, marca_id = ? WHERE id = ?";
 
         try (Connection connection = ConexaoMySQL.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql)) {
