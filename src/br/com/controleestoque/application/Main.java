@@ -1,6 +1,5 @@
 package br.com.controleestoque.application;
 
-import br.com.controleestoque.dao.MarcaDAO;
 import br.com.controleestoque.model.Marca;
 import br.com.controleestoque.model.Produto;
 import br.com.controleestoque.service.MarcaService;
@@ -56,7 +55,7 @@ public class Main {
                                     try {
                                         System.out.println("NOME: ");
                                         nome = scanner.nextLine();
-                                        produtoService.existeProduto(nome);
+                                        produtoService.validarProdutoExistente(nome);
                                         break;
                                     }
                                     catch (Exception e) {
@@ -104,12 +103,11 @@ public class Main {
                                 System.out.println(e.getMessage());
                             }
                         }
-
                         case 2 -> {
                             try {
                                 System.out.println("NOME: ");
                                 String nome = scanner.nextLine();
-                                Produto p = produtoService.mostrarProduto(nome);
+                                Produto p = produtoService.buscarProduto(nome);
                                 System.out.println("PRODUTO ENCONTRADO!");
                                 System.out.println("NOME: " + p.getNome() +
                                         "\nESTOQUE: " + p.getEstoque());
@@ -130,16 +128,18 @@ public class Main {
 
                     switch (opcaoAlteracao) {
                         case 1 -> {
-                            try {
-                                System.out.println("QUAL MARCA DESEJA FAZER UMA ALTERAÇÃO?");
-                                marcaEscolhida = scanner.nextLine();
-                                marcaService.existePorNome(marcaEscolhida);
-                                System.out.println("MARCA ENCONTRADA!");
+                            while (true) {
+                                try {
+                                    System.out.println("QUAL MARCA DESEJA FAZER UMA ALTERAÇÃO?");
+                                    marcaEscolhida = scanner.nextLine();
+                                    marcaService.existePorNome(marcaEscolhida);
+                                    System.out.println("MARCA ENCONTRADA!");
+                                    break;
+                                }
+                                catch (Exception e) {
+                                    System.out.println(e.getMessage());
+                                }
                             }
-                            catch (Exception e) {
-                                System.out.println(e.getMessage());
-                            }
-
                             System.out.println("QUAL OPÇÃO DESEJA? 1- CADASTRAR NOVO PRODUTO, 2- ALTERAR PRODUTO, " +
                                     "3- REMOVER MARCA, 0- VOLTAR:");
                             opcaoAlteracaoMarca = scanner.nextInt();
@@ -173,8 +173,52 @@ public class Main {
 
                                 case 2 -> {
                                     System.out.println("QUE TIPO DE ALTERAÇÃO GOSTARIA DE FAZER? 1- NOME, 2- ESTOQUE, 3- PREÇO, 0- VOLTAR:");
-                                }
+                                    opcaoAlteracaoProduto = scanner.nextInt();
+                                    scanner.nextLine();
+                                    switch (opcaoAlteracaoProduto) {
+                                        case 1 -> {
+                                            Produto produtoEncontrado = null;
+                                            while (true) {
+                                                try {
+                                                    System.out.println("QUAL PRODUTO DESEJA ALTERAR?");
+                                                    String opcaoProduto = scanner.nextLine();
+                                                    produtoEncontrado = produtoService.buscarProduto(opcaoProduto);
+                                                    System.out.println("PRODUTO ENCONTRADO!");
+                                                    break;
+                                                }
+                                                catch (Exception e) {
+                                                    System.out.println("ERRO: " + e.getMessage());
+                                                }
+                                            }
+                                            while (true) {
+                                                try {
+                                                    System.out.println("NOVO NOME: ");
+                                                    String novoNome = scanner.nextLine();
+                                                    produtoService.validarProdutoExistente(novoNome);
+                                                    produtoService.alterarNome(produtoEncontrado.getId(), novoNome);
+                                                    break;
+                                                }
+                                                catch (Exception e) {
+                                                    System.out.println("ERRO: " + e.getMessage());
+                                                }
+                                            }
+                                        }
 
+                                        case 2 -> {
+                                            try {
+                                                System.out.println("NOVO ESTOQUE: ");
+                                                int estoque = scanner.nextInt();
+                                                scanner.nextLine();
+                                                produtoService.alterarEstoque(estoque);
+                                                System.out.println("ESTOQUE ALTERADO COM SUCESSO!");
+
+                                            }
+                                            catch (Exception e) {
+                                                System.out.println("ERRO: " + e.getMessage());
+                                            }
+                                        }
+                                    }
+                                }
                                 case 0 -> {}
                                 default -> System.out.println("OPÇÃO INVÁLIDA!");
                             }

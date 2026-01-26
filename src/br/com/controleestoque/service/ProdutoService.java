@@ -38,7 +38,7 @@ public class ProdutoService {
         produtoDAO.adicionarProduto(produto);
     }
 
-    public Produto mostrarProduto(String nome) {
+    public Produto buscarProduto(String nome) {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("NOME INVÁLIDO!");
         }
@@ -52,28 +52,26 @@ public class ProdutoService {
         return produto;
     }
 
-    public void existeProduto(String nome) {
+    public void validarProdutoExistente(String nome) {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("NOME INVÁLIDO!");
         }
         if (produtoDAO.buscarPorNome(nome) != null) {
             throw new IllegalArgumentException("PRODUTO JÁ EXISTENTE!");
         }
+
     }
-    public void alterarNome(Produto produto) {
-        if (produto.getNome() == null || produto.getNome().isBlank()) {
+    public void alterarNome(int id, String novoNome) {
+        if (novoNome == null || novoNome.isBlank()) {
             throw new IllegalArgumentException("NOME INVÁLIDO!");
         }
-
-        produtoDAO.alterarProduto(produto);
+        produtoDAO.alterarNomeProduto(id, novoNome);
     }
 
-    public void alterarEstoque(Produto produto) {
-        if (produto.getEstoque() > 50) {
+    public void alterarEstoque(int estoque) {
+        if (estoque > 50) {
             throw new IllegalArgumentException("QUANTIDADE MÁXIMA DE ESTOQUE!");
         }
-
-        produtoDAO.alterarProduto(produto);
     }
 
     public void alterarPreco(Produto produto) {
@@ -81,6 +79,6 @@ public class ProdutoService {
             throw new IllegalArgumentException("PREÇO INVÁLIDO!");
         }
 
-        produtoDAO.alterarProduto(produto);
+        //produtoDAO.alterarProduto(produto);
     }
 }

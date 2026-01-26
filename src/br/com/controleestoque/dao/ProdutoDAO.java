@@ -74,20 +74,18 @@ public class ProdutoDAO {
     }
 
     //Alterar produto por nome
-    public void alterarProduto(Produto produto) {
-        String sql = "UPDATE produto SET nome = ?, estoque = ?, preco = ?, marca_id = ? WHERE id = ?";
+    public void alterarNomeProduto(int id, String novoNome) {
+        String sql = "UPDATE produto SET nome = ? WHERE id = ?";
 
         try (Connection connection = ConexaoMySQL.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, produto.getNome());
-            stmt.setInt(2, produto.getEstoque());
-            stmt.setDouble(3, produto.getPreco());
-            stmt.setInt(4, produto.getMarcaId());
+            stmt.setString(1, novoNome);
+            stmt.setInt(2, id);
 
             int linhasAfetadas = stmt.executeUpdate();
 
             if (linhasAfetadas > 0) {
-                System.out.println("NOME ALTERADO COM SUCESSO");
+                System.out.println("NOME ALTERADO COM SUCESSO!");
             }
         }
         catch (SQLException e) {
