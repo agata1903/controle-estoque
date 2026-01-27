@@ -29,24 +29,7 @@ public class ProdutoDAO {
         }
     }
 
-    //Buscar produto por ID
-    public boolean buscarPorId(int id) {
-        String sql = "SELECT * FROM produto WHERE id = ?";
-
-        try (Connection connection = ConexaoMySQL.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql))
-        {
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-
-            return rs.next();
-        }
-        catch (SQLException e) {
-            throw new IllegalArgumentException("PROBLEMA AO BUSCAR O PRODUTO");
-        }
-    }
-
-    //Mostrar produtos da busca
+    //Mostrar produtos da busca por nome
     public Produto buscarPorNome(String nome) {
         String sql = "SELECT * FROM produto WHERE nome = ?";
         try (Connection connection = ConexaoMySQL.getConnection();
@@ -67,13 +50,36 @@ public class ProdutoDAO {
             } else
                 return null;
         }
-
         catch (SQLException e) {
-            throw new IllegalArgumentException("PROBLEMA AO MOSTRAR O PRODUTO", e);
+            throw new IllegalArgumentException("PROBLEMA AO MOSTRAR O NOME DO PRODUTO", e);
         }
     }
 
-    //Alterar produto por nome
+    public Produto buscarPorId(int id) {
+        String sql = "SELECT * FROM produto WHERE id = ?";
+        try (Connection connection = ConexaoMySQL.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                id = rs.getInt("id");
+                String nomeProduto = rs.getString("nome");
+                int estoque = rs.getInt("estoque");
+                double preco = rs.getDouble("preco");
+                int marcaId = rs.getInt("marca_id");
+
+                return new Produto(id, nomeProduto, estoque, preco, marcaId);
+            }
+            return null;
+        }
+        catch (SQLException e) {
+            throw new IllegalArgumentException("PROBLEMA AO MOSTRAR O ID DO PRODUTO", e);
+        }
+    }
+
+    //Alterar nome de produto
     public void alterarNomeProduto(int id, String novoNome) {
         String sql = "UPDATE produto SET nome = ? WHERE id = ?";
 
@@ -89,7 +95,46 @@ public class ProdutoDAO {
             }
         }
         catch (SQLException e) {
-            throw new IllegalArgumentException("PROBLEMA AO ALTERAR O PRODUTO", e);
+            throw new IllegalArgumentException("PROBLEMA AO ALTERAR O NOME DO PRODUTO", e);
+        }
+    }
+    //Alterar estoque de produto
+    public void alterarEstoqueProduto(int id, int novoEstoque) {
+        String sql = "UPDATE produto SET estoque = ? WHERE id = ?";
+
+        try(Connection connection = ConexaoMySQL.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, novoEstoque);
+            stmt.setInt(2, id);
+
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                System.out.println("ESTOQUE ALTERADO COM SUCESSO!");
+            }
+        }
+        catch (SQLException e) {
+            throw new IllegalArgumentException("PROBLEMA AO ALTERAR O ESTOQUE DO PRODUTO", e);
+        }
+    }
+
+    //Alterar preço de produto
+    public void alterarPrecoProduto(int id, double novoPreco) {
+        String sql = "UPDATE produto SET preco = ? WHERE id = ?";
+        try (Connection connection = ConexaoMySQL.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setDouble(1, novoPreco);
+            stmt.setInt(2, id);
+
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                System.out.println("PREÇO ALTERADO COM SUCESSO!");
+            }
+        }
+        catch (SQLException e) {
+            throw new IllegalArgumentException("PROBLEMA AO ALTERAR O PREÇO DO PRODUTO", e);
         }
     }
 }

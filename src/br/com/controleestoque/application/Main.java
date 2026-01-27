@@ -107,7 +107,7 @@ public class Main {
                             try {
                                 System.out.println("NOME: ");
                                 String nome = scanner.nextLine();
-                                Produto p = produtoService.buscarProduto(nome);
+                                Produto p = produtoService.buscarProdutoPorNome(nome);
                                 System.out.println("PRODUTO ENCONTRADO!");
                                 System.out.println("NOME: " + p.getNome() +
                                         "\nESTOQUE: " + p.getEstoque());
@@ -182,7 +182,7 @@ public class Main {
                                                 try {
                                                     System.out.println("QUAL PRODUTO DESEJA ALTERAR?");
                                                     String opcaoProduto = scanner.nextLine();
-                                                    produtoEncontrado = produtoService.buscarProduto(opcaoProduto);
+                                                    produtoEncontrado = produtoService.buscarProdutoPorNome(opcaoProduto);
                                                     System.out.println("PRODUTO ENCONTRADO!");
                                                     break;
                                                 }
@@ -205,17 +205,63 @@ public class Main {
                                         }
 
                                         case 2 -> {
-                                            try {
-                                                System.out.println("NOVO ESTOQUE: ");
-                                                int estoque = scanner.nextInt();
-                                                scanner.nextLine();
-                                                produtoService.alterarEstoque(estoque);
-                                                System.out.println("ESTOQUE ALTERADO COM SUCESSO!");
+                                            Produto produtoEncontrado = null;
+                                            while (true) {
+                                                try {
+                                                    System.out.println("QUAL PRODUTO GOSTARIA DE MUDAR O ESTOQUE?");
+                                                    String opcaoProduto = scanner.nextLine();
+                                                    produtoEncontrado = produtoService.buscarProdutoPorNome(opcaoProduto);
+                                                    System.out.println("PRODUTO ENCONTRADO!");
+                                                    break;
+                                                }
+                                                catch (Exception e) {
+                                                    System.out.println("ERRO: " + e.getMessage());
+                                                }
+                                            }
+                                            while (true) {
+                                                try {
+                                                    System.out.println("NOVO ESTOQUE: ");
+                                                    int novoEstoque = scanner.nextInt();
+                                                    scanner.nextLine();
+                                                    Produto p = produtoService.buscarProdutoPorId(produtoEncontrado.getId());
+                                                    produtoService.alterarEstoque(p.getId(), novoEstoque);
+                                                    break;
+                                                }
+                                                catch (Exception e) {
+                                                    System.out.println("ERRO: " + e.getMessage());
+                                                }
+                                            }
 
+                                        }
+
+                                        case 3 -> {
+                                            Produto produtoEncontrado = null;
+                                            while (true) {
+                                                try {
+                                                    System.out.println("QUAL PRODUTO GOSTARIA DE ALTERAR O PREÇO?");
+                                                    String opcaoProduto = scanner.nextLine();
+
+                                                    produtoEncontrado = produtoService.buscarProdutoPorNome(opcaoProduto);
+                                                    System.out.println("PRODUTO ENCONTRADO!");
+                                                    break;
+                                                } catch (Exception e) {
+                                                    System.out.println("ERRO: " + e.getMessage());
+                                                }
                                             }
-                                            catch (Exception e) {
-                                                System.out.println("ERRO: " + e.getMessage());
-                                            }
+                                                while (true) {
+                                                    try {
+                                                        System.out.println("NOVO PREÇO: ");
+                                                        double novoPreco = scanner.nextDouble();
+                                                        scanner.nextLine();
+
+                                                        produtoService.alterarPreco(produtoEncontrado.getId(), novoPreco);
+                                                        System.out.println("PREÇO ALTERADO COM SUCESSO!");
+                                                        break;
+                                                    }
+                                                    catch (Exception e) {
+                                                        System.out.println("ERRO: " + e.getMessage());
+                                                    }
+                                                }
                                         }
                                     }
                                 }
@@ -224,7 +270,6 @@ public class Main {
                             }
                         }
                     }
-
                 }
 
                 case 4 -> {
