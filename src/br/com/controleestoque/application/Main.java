@@ -15,6 +15,9 @@ public class Main {
         MarcaService  marcaService = new MarcaService();
         ProdutoService produtoService = new ProdutoService();
 
+        MenuPrincipal menuPrincipal = new MenuPrincipal(scanner);
+        menuPrincipal.exibirMenuPrincipal();
+
         String marcaEscolhida;
         int opcao, opcaoCadastro, opcaoBusca, opcaoAlteracao, opcaoAlteracaoMarca, opcaoAlteracaoProduto, opcaoRemocao;
         boolean confirmaCadastro = false, nomeExiste = false;
