@@ -59,5 +59,20 @@ public class MarcaDAO {
         }
     }
 
+    public void removerMarca(int id) {
+        String sql = "DELETE FROM marca WHERE id = ?";
 
+        try (Connection connection = ConexaoMySQL.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                System.out.println("MARCA REMOVIDA COM SUCESSO!");
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException("ERRO AO REMOVER MARCA", e);
+        }
+    }
 }
