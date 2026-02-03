@@ -137,4 +137,18 @@ public class ProdutoDAO {
             throw new IllegalArgumentException("PROBLEMA AO ALTERAR O PREÇO DO PRODUTO", e);
         }
     }
+
+    public boolean existeProdutoComMarca(int marcaId) {
+        String sql = "SELECT 1 FROM produto WHERE marca_id = ? LIMIT 1";
+
+        try (Connection connection = ConexaoMySQL.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, marcaId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException("ERRO AO VERIFICAR PRODUTOS DA MARCA", e);
+        }
+    }
 }
