@@ -34,5 +34,15 @@ public class MarcaService {
 
     }
 
+    public void removerMarca(Marca marca) {
+        if (marca.getNome().isBlank() || marcaDAO.existePorNome(marca.getNome())) {
+            throw new IllegalArgumentException("MARCA NÃO ENCONTRADA.");
+        }
+
+        if (marca.getProdutos().isEmpty()) {
+            marcaDAO.removerMarca(marca.getId());
+        }
+    }
+
 
 }
