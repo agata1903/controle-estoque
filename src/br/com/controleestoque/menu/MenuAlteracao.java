@@ -73,7 +73,20 @@ public class MenuAlteracao {
                 }
             }
 
-            case 2 -> {}
+            case 2 -> {
+                try {
+                    System.out.println("QUAL MARCA DESEJA REMOVER?");
+                    String nome = scanner.nextLine();
+                    marcaService.existePorNome(nome);
+                    existeMarca = true;
+                    if (existeMarca) {
+                        System.out.println("MARCA REMOVIDA COM SUCESSO!");
+                    }
+                }
+                catch (Exception e) {
+                    System.out.println("ERRO: " + e.getMessage());
+                }
+            }
             case 0 -> {}
             default -> System.out.println("OPÇÃO INVÁLIDA!");
         }
