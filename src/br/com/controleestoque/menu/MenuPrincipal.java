@@ -14,7 +14,7 @@ public class MenuPrincipal {
     private ProdutoService produtoService;
     private MarcaService marcaService;
 
-    public MenuPrincipal(Scanner scanner) {
+    public MenuPrincipal(Scanner scanner, ProdutoService produtoService, MarcaService marcaService) {
         this.scanner = scanner;
     }
 
