@@ -79,6 +79,31 @@ public class ProdutoDAO {
         }
     }
 
+    public Produto mostrarProdutosPorMarca(int marcaId) {
+        String sql = "SELECT * FROM produto WHERE marca_id = ?";
+
+        try (Connection connection = ConexaoMySQL.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, marcaId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String nomeProduto = rs.getString("nome");
+                int estoque = rs.getInt("estoque");
+                double preco = rs.getDouble("preco");
+                marcaId = rs.getInt("marca_id");
+
+                return new Produto(id, nomeProduto, estoque, preco, marcaId);
+            }
+
+        }
+        catch (SQLException e) {
+
+        }
+        return null;
+    }
+
     //Alterar nome de produto
     public void alterarNomeProduto(int id, String novoNome) {
         String sql = "UPDATE produto SET nome = ? WHERE id = ?";
