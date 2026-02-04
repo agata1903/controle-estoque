@@ -68,6 +68,20 @@ public class ProdutoService {
         }
 
     }
+
+    public Produto buscarProdutoPorMarca(Marca marca) {
+        if (marca == null) {
+            throw new IllegalArgumentException("MARCA NÃO EXISTENTE!");
+        }
+
+        if (marca.getNome() == null ||  marca.getNome().isBlank()) {
+            throw new IllegalArgumentException("NOME INVÁLIDO!");
+        }
+
+        return produtoDAO.buscarPorId(marca.getId());
+    }
+
+
     public void alterarNome(int id, String novoNome) {
         if (novoNome == null || novoNome.isBlank()) {
             throw new IllegalArgumentException("NOME INVÁLIDO!");
