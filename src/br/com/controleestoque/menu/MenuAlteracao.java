@@ -104,5 +104,38 @@ public class MenuAlteracao {
         System.out.println("ESTES SÃO OS PRODUTOS DA MARCA " + marcaEscolhida);
         Marca marca = marcaService.buscarPorNome(marcaEscolhida);
         produtoService.listarProdutosPorMarca(marca.getId());
+
+        Produto p;
+        while (true) {
+            try {
+                System.out.println("QUAL PRODUTO DESEJA ALTERAR?");
+                produtoEscolhido = scanner.nextLine();
+                p = produtoService.buscarProdutoPorNome(produtoEscolhido);
+                System.out.println("PRODUTO ENCONTRADO!");
+                break;
+            }
+            catch (Exception e) {
+                System.out.println("ERRO: " + e.getMessage());
+            }
+        }
+
+        System.out.println("O QUE DESEJA FAZER COM ESSE PRODUTO? 1- ALTERAR NOME, 2- ALTERAR ESTOQUE, " +
+                "3- ALTERAR PREÇO, 4- REMOVER PRODUTO, 0- VOLTAR");
+        opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (opcao) {
+            case 1 -> {
+                try {
+                    System.out.println("NOVO NOME: ");
+                    String novoNome = scanner.nextLine();
+                    produtoService.validarProdutoExistente(novoNome);
+                    produtoService.alterarNome(p.getId(), novoNome);
+                }
+                catch (Exception e) {
+                    System.out.println("ERRO: " + e.getMessage());
+                }
+            }
+        }
     }
 }
