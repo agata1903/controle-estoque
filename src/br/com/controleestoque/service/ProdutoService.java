@@ -81,6 +81,16 @@ public class ProdutoService {
         return produtoDAO.buscarPorId(marca.getId());
     }
 
+    public void listarProdutosPorMarca(int marcaId) {
+        List<Produto> produtos = produtoDAO.listarProdutosPorMarca(marcaId);
+
+        if (produtos.isEmpty()) {
+            throw new IllegalArgumentException("ESSA MARCA NÃO POSSUI PRODUTOS!");
+        }
+        for (Produto produto : produtos) {
+            System.out.println(produto);
+        }
+    }
 
     public void alterarNome(int id, String novoNome) {
         if (novoNome == null || novoNome.isBlank()) {
