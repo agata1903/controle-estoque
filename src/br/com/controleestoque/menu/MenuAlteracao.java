@@ -17,8 +17,8 @@ public class MenuAlteracao {
             scanner.nextLine();
 
             switch (opcao) {
-                case 1 -> alterarMarca(scanner, marcaService, produtoService);
-                case 2 -> {}
+                case 1 -> alterarMarca(scanner, produtoService, marcaService);
+                case 2 -> alterarProduto(scanner, produtoService,marcaService);
                 case 0 -> {}
                 default -> System.out.println("OPÇÃO INVÁLIDA!");
             }
