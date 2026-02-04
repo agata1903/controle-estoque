@@ -86,4 +86,20 @@ public class MenuAlteracao {
             default -> System.out.println("OPÇÃO INVÁLIDA!");
         }
     }
+
+    public static void alterarProduto(Scanner scanner, ProdutoService produtoService, MarcaService marcaService) {
+        String marcaEscolhida;
+        while (true) {
+            try {
+                System.out.println("DE QUAL MARCA GOSTARIA DE ALTERAR UM PRODUTO?");
+                marcaEscolhida = scanner.nextLine();
+                marcaService.existePorNome(marcaEscolhida);
+                System.out.println("MARCA ENCONTRADA!");
+                break;
+            }
+            catch (Exception e) {
+                System.out.println("ERRO: " + e.getMessage());
+            }
+        }
+    }
 }
