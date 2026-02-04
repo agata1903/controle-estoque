@@ -101,5 +101,8 @@ public class MenuAlteracao {
                 System.out.println("ERRO: " + e.getMessage());
             }
         }
+        System.out.println("ESTES SÃO OS PRODUTOS DA MARCA " + marcaEscolhida);
+        Marca marca = marcaService.buscarPorNome(marcaEscolhida);
+        produtoService.listarProdutosPorMarca(marca.getId());
     }
 }
