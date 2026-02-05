@@ -136,6 +136,18 @@ public class MenuAlteracao {
                     System.out.println("ERRO: " + e.getMessage());
                 }
             }
+            case 2 -> {
+                try {
+                    System.out.println("QUANTO DESEJA ADICIONAR AO ESTOQUE? ");
+                    int novoEstoque = scanner.nextInt();
+                    scanner.nextLine();
+                    produtoService.validarAlteracaoEstoque(p, novoEstoque);
+                    produtoService.alterarEstoque(p, novoEstoque);
+                }
+                catch (Exception e) {
+                    System.out.println("ERRO: " + e.getMessage());
+                }
+            }
         }
     }
 }
