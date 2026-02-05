@@ -103,6 +103,9 @@ public class ProdutoService {
         if (novoEstoque <= 0) {
             throw new IllegalArgumentException("QUANTIDADE INVÁLIDA!");
         }
+        if (produto.getEstoque() == 50) {
+            throw new IllegalArgumentException("ESTOQUE MÁXIMO ATINGIDO! NÃO É POSSÍVEL REPOR ESTOQUE!");
+        }
 
         produtoDAO.alterarEstoqueProduto(id, novoEstoque);
     }
