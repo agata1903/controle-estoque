@@ -99,9 +99,9 @@ public class ProdutoService {
         produtoDAO.alterarNomeProduto(id, novoNome);
     }
 
-    public void alterarEstoque(int id, int novoEstoque) {
-        if (novoEstoque > 50) {
-            throw new IllegalArgumentException("QUANTIDADE MÁXIMA DE ESTOQUE!");
+    public void validarAlteracaoEstoque(Produto produto, int novoEstoque) {
+        if (novoEstoque <= 0) {
+            throw new IllegalArgumentException("QUANTIDADE INVÁLIDA!");
         }
 
         produtoDAO.alterarEstoqueProduto(id, novoEstoque);
