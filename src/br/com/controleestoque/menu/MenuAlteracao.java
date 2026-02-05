@@ -148,6 +148,17 @@ public class MenuAlteracao {
                     System.out.println("ERRO: " + e.getMessage());
                 }
             }
+            case 3 -> {
+                try {
+                    System.out.println("QUAL O NOVO PREÇO DO PRODUTO? ");
+                    double novoPreco = scanner.nextDouble();
+                    scanner.nextLine();
+                    produtoService.alterarPreco(p.getId(), novoPreco);
+                }
+                catch (Exception e) {
+                    System.out.println("ERRO: " + e.getMessage());
+                }
+            }
         }
     }
 }
