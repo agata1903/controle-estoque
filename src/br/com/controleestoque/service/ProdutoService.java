@@ -107,7 +107,11 @@ public class ProdutoService {
             throw new IllegalArgumentException("ESTOQUE MÁXIMO ATINGIDO! NÃO É POSSÍVEL REPOR ESTOQUE!");
         }
 
-        produtoDAO.alterarEstoqueProduto(id, novoEstoque);
+    }
+
+    public void alterarEstoque(Produto produto, int quantidade) {
+        int novoEstoque = produto.getEstoque() + quantidade;
+        produtoDAO.alterarEstoqueProduto(produto.getId(), novoEstoque);
     }
 
     public void alterarPreco(int id, double novoPreco) {
