@@ -5,6 +5,7 @@ import br.com.controleestoque.service.ProdutoService;
 
 import java.util.Scanner;
 
+import static br.com.controleestoque.menu.MenuAlteracao.exibirMenuAlteracao;
 import static br.com.controleestoque.menu.MenuBusca.exibirMenuBusca;
 import static br.com.controleestoque.menu.MenuCadastro.exibirMenuCadastro;
 
@@ -16,11 +17,13 @@ public class MenuPrincipal {
 
     public MenuPrincipal(Scanner scanner, ProdutoService produtoService, MarcaService marcaService) {
         this.scanner = scanner;
+        this.produtoService = produtoService;
+        this.marcaService = marcaService;
     }
 
     public void exibirMenuPrincipal() {
         int opcao;
-        System.out.println("O QUE DESEJA FAZER: 1- CADASTRAR, 2- BUSCAR, 3- ALTERAR, 4- REMOVER, 0- SAIR:");
+        System.out.println("O QUE DESEJA FAZER: 1- CADASTRAR, 2- BUSCAR, 3- ALTERAR, 0- SAIR:");
         opcao = scanner.nextInt();
         scanner.nextLine();
 
@@ -29,9 +32,7 @@ public class MenuPrincipal {
 
             case 2 -> exibirMenuBusca(scanner, produtoService, marcaService);
 
-            case 3 -> {}
-
-            case 4 -> {}
+            case 3 -> exibirMenuAlteracao(scanner, produtoService, marcaService);
 
             case 0 -> System.out.println("ENCERRANDO SISTEMA...");
         }
